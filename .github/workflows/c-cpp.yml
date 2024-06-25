@@ -1,27 +1,37 @@
-name: C/C++ CI
+name: Build and Test
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
- script:
-          - sudo apt update
-          - sudo apt install libgtkmm-4.0-dev
+    branches:
+      - main
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    name: Install gtkmm4
-   
 
     steps:
-    - uses: actions/checkout@v4
-    - name: configure
-      run: ./configure
-    - name: make
-      run: make
-    - name: make check
-      run: make check
-    - name: make distcheck
-      run: make distcheck
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y cmake pkg-config libgtkmm-4.0-dev
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+
+      - name: Build
+        run: |
+          cmake --build build --config Release
+
+      - name: Run tests (if applicable)
+        run: |
+          # Comandos para ejecutar pruebas, si las tienes
+
