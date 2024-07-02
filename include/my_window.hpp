@@ -3,11 +3,11 @@
 #define MyWindow_H
 
 #include <gtkmm.h>
-#include "view.hpp"
+#include "home/view.hpp"
 
 class MyWindow : public Gtk::Window {
 public:
-    MyWindow(View *view);
+    MyWindow(HomeView *view);
 private:
 };
 
